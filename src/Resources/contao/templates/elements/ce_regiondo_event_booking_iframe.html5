@@ -1,0 +1,38 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('headline'); ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('content'); ?>
+
+<div class="regiondo-event-booking regiondo-event-booking--iframe">
+    <?php if ($this->products): ?>
+        <?php foreach ($this->products as $product): ?>
+            <div class="regiondo-event-booking__item">
+                <h2 class="regiondo-event-booking__name"><?= $product['event']['title'] ?></h2>
+
+                <div data-regiondo-booking-iframe="<?= specialchars(json_encode($product['iframe'])) ?>"></div>
+
+                <?php if ($product['jsonLd']): ?>
+                    <?php foreach ($product['jsonLd'] as $jsonLd): ?>
+                        <script type="application/ld+json">
+                            <?= json_encode($jsonLd) ?>
+                        </script>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="regiondo-event-booking__empty"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.event.noEvents'] ?></p>
+    <?php endif; ?>
+</div>
+
+<?php
+if ($this->products) {
+    $helper = \System::getContainer()->get(\Derhaeuptling\RegiondoBundle\AssetsHelper::class);
+    $GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('regiondo.js'));
+    $GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('event-booking-iframe.js'));
+}
+?>
+
+<?php $this->endblock(); ?>

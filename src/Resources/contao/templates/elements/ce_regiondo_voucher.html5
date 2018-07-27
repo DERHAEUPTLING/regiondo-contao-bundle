@@ -1,0 +1,15 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<div class="regiondo-voucher regiondo-voucher--iframe">
+    <div data-regiondo-voucher-iframe="<?= specialchars(json_encode($this->config)) ?>"></div>
+</div>
+
+<?php
+$helper = \System::getContainer()->get(\Derhaeuptling\RegiondoBundle\AssetsHelper::class);
+$GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('regiondo.js'));
+$GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('voucher-iframe.js'));
+?>
+
+<?php $this->endblock(); ?>

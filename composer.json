@@ -1,0 +1,46 @@
+{
+    "name": "derhaeuptling/regiondo-contao-bundle",
+    "description": "Regiondo bundle integration for Contao Open Source CMS",
+    "keywords": ["contao", "regiondo"],
+    "type": "contao-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "derhaeuptling",
+            "homepage": "https://derhaeuptling.com/"
+        },
+        {
+            "name": "Kamil Kuzminski",
+            "email": "kamil.kuzminski@codefog.pl",
+            "homepage": "https://github.com/qzminski",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "contao/core-bundle": "^4.4",
+        "contao/calendar-bundle": "^4.4",
+        "codefog/contao-haste": "^4.20",
+        "guzzlehttp/guzzle": "^6.3",
+        "symfony/monolog-bundle": "^3.2",
+        "kevinrob/guzzle-cache-middleware": "^3.2"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0",
+        "friendsofphp/php-cs-fixer": "^2.2"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "suggest": {
+        "doctrine/doctrine-cache-bundle": "Adds the API request caching, see README for the details"
+    },
+    "autoload": {
+        "psr-4": {
+            "Derhaeuptling\\RegiondoBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Derhaeuptling\\RegiondoBundle\\ContaoManager\\Plugin"
+    }
+}

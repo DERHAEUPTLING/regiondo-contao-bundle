@@ -1,0 +1,19 @@
+services:
+    Derhaeuptling\RegiondoBundle\EventListener\CalendarListener:
+        arguments:
+            - '@database_connection'
+            - '@Derhaeuptling\RegiondoBundle\Synchronizer'
+
+    Derhaeuptling\RegiondoBundle\EventListener\CalendarEventListener:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\Synchronizer'
+
+    Derhaeuptling\RegiondoBundle\EventListener\ContentListener:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\Synchronizer'
+
+    Derhaeuptling\RegiondoBundle\EventListener\ProductListener:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\ClientFactory'
+            - '@database_connection'
+            - '@Derhaeuptling\RegiondoBundle\Synchronizer'

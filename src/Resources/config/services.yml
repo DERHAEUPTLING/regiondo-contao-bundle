@@ -1,0 +1,36 @@
+services:
+    _defaults:
+        autoconfigure: true
+
+    _instanceof:
+        Contao\CoreBundle\Framework\FrameworkAwareInterface:
+            calls:
+                - [setFramework, ['@contao.framework']]
+
+    Derhaeuptling\RegiondoBundle\AssetsHelper:
+        arguments:
+            $bundleDir: 'bundles/derhaeuptlingregiondo'
+            $rootDir: '%kernel.project_dir%'
+            $useSources: '%kernel.debug%'
+
+    Derhaeuptling\RegiondoBundle\BookingManager:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\ClientFactory'
+            - '@contao.framework'
+
+    Derhaeuptling\RegiondoBundle\DataFormatter:
+        arguments:
+            - '@contao.framework'
+
+    Derhaeuptling\RegiondoBundle\EventHelper:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\ClientFactory'
+            - '@Derhaeuptling\RegiondoBundle\DataFormatter'
+
+    Derhaeuptling\RegiondoBundle\Synchronizer:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\ClientFactory'
+            - '@database_connection'
+            - '@logger'
+        tags:
+            - { name: monolog.logger, channel: regiondo }

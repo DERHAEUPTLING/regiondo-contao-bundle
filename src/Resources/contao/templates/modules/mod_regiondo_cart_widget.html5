@@ -1,0 +1,23 @@
+<?php
+$config = [
+    'src' => $this->scriptUrl,
+    'data' => [
+        'url' => $this->url,
+        'cartShow' => 'true',
+        'cartPrice' => 'true',
+        'cartText' => 'Add to cart',
+        'cartIcon' => $this->scriptUrl . '/regiondo-cart-icon.png',
+        'cartColor' => '#ffffff',
+        'cartBackground' => '#671a35',
+        'cartFont' => 'false',
+        'cartPosition' => 'bottom-right',
+    ],
+];
+?>
+
+<script>window.RegiondoBookingScript = <?= json_encode($config) ?>;</script>
+
+<?php
+$helper = \System::getContainer()->get(\Derhaeuptling\RegiondoBundle\AssetsHelper::class);
+$GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('regiondo.js'));
+?>
