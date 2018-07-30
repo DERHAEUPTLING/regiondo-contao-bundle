@@ -101,4 +101,14 @@ class ContentListener
 
         return null;
     }
+
+    /**
+     * On get event template options callback.
+     *
+     * @return array
+     */
+    public function onGetEventTemplateOptionsCallback(): array
+    {
+        return Controller::getTemplateGroup('regiondo_event_');
+    }
 }

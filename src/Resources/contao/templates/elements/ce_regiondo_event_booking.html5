@@ -1,0 +1,35 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<div class="regiondo-event-booking regiondo-event-booking--default">
+    <?php foreach ($this->products as $product): ?>
+        <div class="regiondo-event-booking__item">
+            <h2 class="regiondo-event-booking__name"><?= $product['event']['title'] ?></h2>
+
+            <?php foreach ($product['variations'] as $variation): ?>
+                <div class="regiondo-event-booking__variation">
+                    <h3 class="regiondo-event-booking__variation-name"><?= $variation['event']['regiondo_variationName'] ?></h3>
+
+                    <div class="regiondo-event-booking__variation-form" data-regiondo-product="<?= \Contao\StringUtil::specialchars(json_encode($product['config'])) ?>"></div>
+                </div>
+            <?php endforeach; ?>
+
+            <?php if ($product['jsonLd']): ?>
+                <?php foreach ($product['jsonLd'] as $jsonLd): ?>
+                    <script type="application/ld+json">
+                        <?= json_encode($jsonLd) ?>
+                    </script>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<?php
+$helper = \System::getContainer()->get(\Derhaeuptling\RegiondoBundle\AssetsHelper::class);
+$GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('base.js'));
+$GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('event-booking.js'));
+?>
+
+<?php $this->endblock(); ?>

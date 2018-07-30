@@ -18,6 +18,7 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [ContentListen
 /*
  * Add palettes
  */
+$GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_event_booking'] = '{type_legend},type,headline;{include_legend},regiondo_calendar;{template_legend:hide},customTpl,regiondo_eventTemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_event_booking_iframe'] = '{type_legend},type;{include_legend},regiondo_calendar,regiondo_iframeWidth;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_reviews'] = '{type_legend},type;{include_legend},regiondo_products,regiondo_reviewsLimit,regiondo_syncReviews;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_voucher'] = '{type_legend},type;{include_legend},regiondo_voucher,regiondo_iframeWidth;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
@@ -49,6 +50,15 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_voucher'] = [
     'inputType' => 'select',
     'options_callback' => [\Derhaeuptling\RegiondoBundle\EventListener\ProductListener::class, 'onGetVoucherOptionsCallback'],
     'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
+    'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_eventTemplate'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_content']['regiondo_eventTemplate'],
+    'exclude' => true,
+    'inputType' => 'select',
+    'options_callback' => [ContentListener::class, 'onGetEventTemplateOptionsCallback'],
+    'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
     'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
 ];
 

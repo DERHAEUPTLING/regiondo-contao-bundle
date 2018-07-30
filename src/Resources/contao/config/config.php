@@ -19,13 +19,16 @@ $GLOBALS['BE_MOD']['system']['regiondo_products'] = [
  * Frontend modules
  */
 $GLOBALS['FE_MOD']['regiondo'] = [
+//    'regiondo_cart' => \Derhaeuptling\RegiondoBundle\FrontendModule\CartModule::class,
     'regiondo_cart_widget' => \Derhaeuptling\RegiondoBundle\FrontendModule\CartWidgetModule::class,
+//    'regiondo_checkout' => \Derhaeuptling\RegiondoBundle\FrontendModule\CheckoutModule::class,
 ];
 
 /*
  * Content elements
  */
 $GLOBALS['TL_CTE']['regiondo'] = [
+    //'regiondo_event_booking' => \Derhaeuptling\RegiondoBundle\ContentElement\EventBookingElement::class,
     'regiondo_event_booking_iframe' => \Derhaeuptling\RegiondoBundle\ContentElement\EventBookingIframeElement::class,
     'regiondo_reviews' => \Derhaeuptling\RegiondoBundle\ContentElement\ReviewsElement::class,
     'regiondo_voucher' => \Derhaeuptling\RegiondoBundle\ContentElement\VoucherElement::class,

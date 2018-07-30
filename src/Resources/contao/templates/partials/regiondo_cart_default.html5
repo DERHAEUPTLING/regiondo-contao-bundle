@@ -1,0 +1,53 @@
+<div class="regiondo-cart">
+    <?php if ($this->form): ?>
+        <form class="regiondo-cart__form" action="<?= $this->form->action ?>" method="<?= $this->form->method ?>" enctype="<?= $this->form->enctype ?>">
+            <?= $this->form->hidden ?>
+
+            <table class="regiondo-cart__items">
+                <thead>
+                <tr>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.name'] ?></th>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.unitPrice'] ?></th>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.quantity'] ?></th>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.total'] ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->items as $item): ?>
+                        <tr>
+                            <td colspan="4"><?= $item['title'] ?> – <?= $item['date'] ?></td>
+                        </tr>
+                        <?php foreach ($item['reservations'] as $reservation): ?>
+                            <tr>
+                                <td><?= $reservation['option']['name'] ?></td>
+                                <td><?= $reservation['price'] ?></td>
+                                <td><?= $this->form->widgets[$reservation['fieldName']]->parse() ?></td>
+                                <td><?= $reservation['total'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.total'] ?></th>
+                        <th><?= $this->total ?></th>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <?= $this->form->widgets['submit']->parse() ?>
+
+            <?php if ($this->success): ?>
+                <p class="regiondo-event-booking__form-success"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.success'] ?></p>
+            <?php endif; ?>
+        </form>
+
+        <?php if ($this->checkoutUrl): ?>
+            <div class="regiondo-cart__checkout">
+                <a href="<?= $this->checkoutUrl ?>" title="<?= specialchars($GLOBALS['TL_LANG']['MSC']['regiondo.cart.checkout']) ?>" class="regiondo-cart__checkout-link"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.checkout'] ?></a>
+            </div>
+        <?php endif; ?>
+    <?php else: ?>
+        <p class="regiondo-cart__empty"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.empty'] ?></p>
+    <?php endif; ?>
+</div>

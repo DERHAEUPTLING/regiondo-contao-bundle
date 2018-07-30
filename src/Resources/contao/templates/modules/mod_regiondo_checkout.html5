@@ -1,0 +1,13 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<div class="regiondo-checkout" data-regiondo-checkout="<?= \Contao\StringUtil::specialchars(json_encode($this->config)) ?>"></div>
+
+<?php
+$helper = \System::getContainer()->get(\Derhaeuptling\RegiondoBundle\AssetsHelper::class);
+$GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('base.js'));
+$GLOBALS['TL_BODY'][] = sprintf('<script src="%s" defer></script>', $helper->getIncludePath('checkout.js'));
+?>
+
+<?php $this->endblock(); ?>

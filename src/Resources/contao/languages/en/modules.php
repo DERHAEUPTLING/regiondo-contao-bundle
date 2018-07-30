@@ -17,4 +17,6 @@ $GLOBALS['TL_LANG']['MOD']['regiondo_products'] = ['Regiondo products'];
  * Frontend modules
  */
 $GLOBALS['TL_LANG']['FMD']['regiondo'] = 'Regiondo';
+$GLOBALS['TL_LANG']['FMD']['regiondo_cart'] = ['Regiondo cart'];
 $GLOBALS['TL_LANG']['FMD']['regiondo_cart_widget'] = ['Regiondo cart (widget)'];
+$GLOBALS['TL_LANG']['FMD']['regiondo_checkout'] = ['Regiondo checkout'];

@@ -7,6 +7,23 @@ services:
             calls:
                 - [setFramework, ['@contao.framework']]
 
+        Derhaeuptling\RegiondoBundle\Controller\AjaxController:
+            calls:
+                - [setBookingManager, ['@Derhaeuptling\RegiondoBundle\BookingManager']]
+
+    Derhaeuptling\RegiondoBundle\Controller\CartController:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\Cart'
+
+    Derhaeuptling\RegiondoBundle\Controller\CheckoutController:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\Cart'
+            - '@Derhaeuptling\RegiondoBundle\Checkout'
+
+    Derhaeuptling\RegiondoBundle\Controller\EventBookingController:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\EventHelper'
+
     Derhaeuptling\RegiondoBundle\AssetsHelper:
         arguments:
             $bundleDir: 'bundles/derhaeuptlingregiondo'
@@ -17,6 +34,16 @@ services:
         arguments:
             - '@Derhaeuptling\RegiondoBundle\ClientFactory'
             - '@contao.framework'
+
+    Derhaeuptling\RegiondoBundle\Cart:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\BookingManager'
+            - '@Derhaeuptling\RegiondoBundle\ClientFactory'
+            - '@Derhaeuptling\RegiondoBundle\DataFormatter'
+
+    Derhaeuptling\RegiondoBundle\Checkout:
+        arguments:
+            - '@Derhaeuptling\RegiondoBundle\BookingManager'
 
     Derhaeuptling\RegiondoBundle\DataFormatter:
         arguments:

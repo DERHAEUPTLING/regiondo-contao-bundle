@@ -1,0 +1,56 @@
+<div class="regiondo-checkout">
+    <?php if ($this->form): ?>
+        <form class="regiondo-checkout__form" action="<?= $this->form->action ?>" method="<?= $this->form->method ?>" enctype="<?= $this->form->enctype ?>">
+            <?= $this->form->hidden ?>
+
+            <table class="regiondo-checkout__items">
+                <thead>
+                <tr>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.name'] ?></th>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.unitPrice'] ?></th>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.quantity'] ?></th>
+                    <th><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.total'] ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($this->items as $item): ?>
+                    <tr>
+                        <td colspan="4"><?= $item['title'] ?> – <?= $item['date'] ?></td>
+                    </tr>
+                    <?php foreach ($item['reservations'] as $reservation): ?>
+                        <tr>
+                            <td><?= $reservation['option']['name'] ?></td>
+                            <td><?= $reservation['price'] ?></td>
+                            <td><?= $this->form->widgets[$reservation['fieldName']]->parse() ?></td>
+                            <td><?= $reservation['total'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="3"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.total'] ?></th>
+                    <th><?= $this->total ?></th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <div class="regiondo-checkout__contact">
+                <?php foreach ($this->contactFields as $field): ?>
+                    <?= $this->form->widgets[$field]->parse() ?>
+                <?php endforeach; ?>
+            </div>
+
+            <?= $this->form->widgets['submit']->parse() ?>
+        </form>
+    <?php elseif ($this->error): ?>
+        <p class="regiondo-event-booking__error"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.checkout.error'] ?></p>
+    <?php elseif ($this->success): ?>
+        <div class="regiondo-event-booking__success">
+            <h3 class="regiondo-event-booking__success-headline"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.checkout.successHeadline'] ?></h3>
+            <p class="regiondo-event-booking__success-message"><?= sprintf($GLOBALS['TL_LANG']['MSC']['regiondo.checkout.successMessage'], $this->order['order_id']) ?></p>
+        </div>
+    <?php else: ?>
+        <p class="regiondo-checkout__empty"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.cart.empty'] ?></p>
+    <?php endif; ?>
+</div>

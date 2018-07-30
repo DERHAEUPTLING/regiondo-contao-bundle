@@ -1,0 +1,42 @@
+<div class="regiondo-event-booking__form-wrap">
+    <?php if ($this->bookings): ?>
+        <div class="regiondo-event-booking__bookings">
+            <p class="regiondo-event-booking__bookings-text"><?= sprintf($GLOBALS['TL_LANG']['MSC']['regiondo.event.bookings'], count($this->bookings)) ?>:</p>
+            <ul class="regiondo-event-booking__bookings-list">
+                <?php foreach ($this->bookings as $booking): ?>
+                    <li class="regiondo-event-booking__bookings-item"><?= $booking ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
+    <form class="regiondo-event-booking__form" action="<?= $this->form->action ?>" id="<?= $this->form->formId ?>" method="<?= $this->form->method ?>" enctype="<?= $this->form->enctype ?>">
+        <?= $this->form->hidden ?>
+
+        <?= $this->form->widgets['event']->parse() ?>
+
+        <?php if ($this->noOptionsAvailable): ?>
+            <p class="regiondo-event-booking__form-error"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.event.noOptionsAvailable'] ?></p>
+        <?php endif; ?>
+
+        <?php if ($this->options): ?>
+            <?php foreach ($this->options as $field): ?>
+                <?= $this->form->widgets[$field['name']]->parse() ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if ($this->noOptionsSelected): ?>
+            <p class="regiondo-event-booking__form-error"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.event.noOptionsSelected'] ?></p>
+        <?php endif; ?>
+
+        <?= $this->form->widgets['submit']->parse() ?>
+
+        <?php if ($this->error): ?>
+            <p class="regiondo-event-booking__form-error"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.event.error'] ?></p>
+        <?php endif; ?>
+
+        <?php if ($this->success): ?>
+            <p class="regiondo-event-booking__form-success"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.event.success'] ?></p>
+        <?php endif; ?>
+    </form>
+</div>
