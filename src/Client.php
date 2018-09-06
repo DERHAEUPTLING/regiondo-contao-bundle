@@ -383,7 +383,7 @@ class Client
         } catch (ClientException $e) {
             // Log the exception if logger is available and return null
             if (null !== $this->logger) {
-                $this->logger->critical($e->getMessage(), $e->getContext());
+                $this->logger->notice($e->getMessage(), $e->getContext());
 
                 return null;
             }
@@ -472,7 +472,7 @@ class Client
     private function handleException(ClientException $e)
     {
         if (null !== $this->logger) {
-            $this->logger->critical($e->getMessage(), $e->getContext());
+            $this->logger->notice($e->getMessage(), $e->getContext());
 
             return true;
         }
