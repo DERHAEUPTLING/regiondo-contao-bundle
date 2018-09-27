@@ -10,13 +10,15 @@ document.addEventListener('DOMContentLoaded', function () {
         iframe.dataset.checkout = 'lightbox';
         iframe.style = 'border:0;background:transparent;';
 
-        var matches = /^#regiondo-(\d{4}-\d{2}-\d{2})-(\d{2}:\d{2})$/.exec(window.location.hash);
+        var matches = /^#regiondo-(\d{4}-\d{2}-\d{2})(-\d{2}:\d{2})?$/.exec(window.location.hash);
 
-        // Add the date and time to the URL
+        // Add the date and optionally time to the URL
         if (matches !== null) {
-            // @todo – uncomment when Regiondo fixes the time parameter
-            //iframe.dataset.url += '/type/ticket/date/' + matches[1] + '/time/' + matches[2];
-            iframe.dataset.url += '/type/ticket/date/' + matches[1];
+            if (matches[2]) {
+                iframe.dataset.url += '/type/ticket/date/' + matches[1] + '/time/' + matches[2].substring(1);
+            } else {
+                iframe.dataset.url += '/type/ticket/date/' + matches[1];
+            }
         }
 
         var parent = container.parentNode;
