@@ -73,6 +73,14 @@ You can append the URL hash to the event link as shown in the example of `event_
 …
 ```
 
+You can also disable the time in hash by passing `false` as second argument:
+
+```php
+…
+<?= \Derhaeuptling\RegiondoBundle\ContentElement\EventBookingIframeElement::generateUrlHash($this->id, false) ?>
+…
+```
+
 
 ## Synchronize using CRON
 

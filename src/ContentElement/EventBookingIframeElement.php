@@ -29,16 +29,21 @@ class EventBookingIframeElement extends EventBookingElement
      * Generate the Regiondo event URL hash.
      *
      * @param string|int $eventId
+     * @param boolean    $addTime
      *
      * @return null|string
      */
-    public static function generateUrlHash($eventId): ?string
+    public static function generateUrlHash($eventId, bool $addTime = true): ?string
     {
         if (null === ($model = CalendarEventsModel::findByPk($eventId))) {
             return null;
         }
 
         $date = Event::createFromModel($model)->getDate();
+
+        if (!$addTime) {
+            return \sprintf('regiondo-%s', $date->format('Y-m-d'));
+        }
 
         return \sprintf('regiondo-%s-%s', $date->format('Y-m-d'), $date->format('H:i'));
     }
