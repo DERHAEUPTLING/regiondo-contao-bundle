@@ -17,6 +17,10 @@ use Derhaeuptling\RegiondoBundle\EventListener\CalendarListener;
 $GLOBALS['TL_DCA']['tl_calendar']['config']['onload_callback'][] = [CalendarListener::class, 'onLoadCallback'];
 $GLOBALS['TL_DCA']['tl_calendar']['config']['ondelete_callback'][] = [CalendarListener::class, 'onDeleteCallback'];
 
+if (($index = array_search(['tl_calendar', 'checkPermission'], $GLOBALS['TL_DCA']['tl_calendar']['config']['onload_callback'], true)) !== false) {
+    $GLOBALS['TL_DCA']['tl_calendar']['config']['onload_callback'][$index] = [CalendarListener::class, 'checkPermission'];
+}
+
 /*
  * Adjust the list configuration
  */

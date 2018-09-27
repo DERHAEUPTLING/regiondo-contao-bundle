@@ -108,6 +108,20 @@ class CalendarListener
     }
 
     /**
+     * Check the permissions to edit table tl_calendar (override)
+     */
+    public function checkPermission()
+    {
+        $act = Input::get('act');
+
+        if ('regiondo_sync_all' === $act || 'regiondo_sync' === $act) {
+            return;
+        }
+
+        System::importStatic('tl_calendar')->checkPermission();
+    }
+
+    /**
      * On delete callback.
      *
      * @param DataContainer $dc
