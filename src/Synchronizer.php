@@ -143,9 +143,11 @@ class Synchronizer
 
         // Get the reviews
         foreach ($productIds as $productId) {
-            if (null === ($items = $client->getReviews($productId)) || null === ($product = $client->getProduct($productId))) {
+            if (null === ($items = $client->getReviews($productId))) {
                 continue;
             }
+
+            $product = $client->getProduct($productId);
 
             foreach ($items as $item) {
                 $item['product'] = $product;
