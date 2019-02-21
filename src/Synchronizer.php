@@ -394,7 +394,7 @@ class Synchronizer
                         $return[] = [
                             'id' => $variationId,
                             'name' => $variation['name'],
-                            'date' => new \DateTime($date.' '.$v, new \DateTimeZone($product['timezone'])),
+                            'date' => new \DateTime($date.' '.$v, ($product['timezone'] ? new \DateTimeZone($product['timezone']) : null)),
                             'timeZone' => $product['timezone'],
                         ];
                     }
