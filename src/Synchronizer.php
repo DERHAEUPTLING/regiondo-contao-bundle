@@ -332,7 +332,7 @@ class Synchronizer
                 $event = $basicEvent;
                 $event['regiondo_variationId'] = $variation['id'];
                 $event['regiondo_variationName'] = $variation['name'];
-                $event['regiondo_timeZone'] = $variation['timeZone'];
+                $event['regiondo_timeZone'] = $variation['timeZone'] ?: '';
                 $event['regiondo_data'] = \json_encode(\array_merge($product, ['options' => $client->getAvailableOptions($variation['id'], $date)]));
                 $event['addTime'] = 1;
                 $event['startDate'] = $date->getTimestamp();
@@ -395,7 +395,7 @@ class Synchronizer
                             'id' => $variationId,
                             'name' => $variation['name'],
                             'date' => new \DateTime($date.' '.$v, ($product['timezone'] ? new \DateTimeZone($product['timezone']) : null)),
-                            'timeZone' => $product['timezone'],
+                            'timeZone' => $product['timezone'] ?: '',
                         ];
                     }
                 }

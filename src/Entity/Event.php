@@ -109,7 +109,10 @@ class Event
 
         $date = new \DateTime();
         $date->setTimestamp((int) $model->startTime);
-        $date->setTimezone(new \DateTimeZone($model->regiondo_timeZone));
+
+        if ($model->regiondo_timeZone) {
+            $date->setTimezone(new \DateTimeZone($model->regiondo_timeZone));
+        }
 
         $event = new self((int) $model->regiondo_product, (int) $model->regiondo_variationId, $date);
         $event->model = $model;
