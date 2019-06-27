@@ -2,28 +2,37 @@
 
 <?php $this->block('content'); ?>
 
-<div class="regiondo-reviews">
-    <?php if ($this->reviews): ?>
-        <?php foreach ($this->reviews as $review): ?>
-            <div class="regiondo-reviews__item">
-                <p class="regiondo-reviews__info"><span class="regiondo-reviews__author"><?= $GLOBALS['TL_LANG']['MSC']['by'] ?> <?= $review['nickname'] ?></span> | <time datetime="<?= $review['created_datetime'] ?>" class="regiondo-reviews__date"><?= $review['created_at'] ?></time></p>
+<?php if ($this->showReviews): ?>
+    <div class="regiondo-reviews">
+        <?php if ($this->reviews): ?>
+            <?php foreach ($this->reviews as $review): ?>
+                <div class="regiondo-reviews__item">
+                    <p class="regiondo-reviews__info"><span class="regiondo-reviews__author"><?= $GLOBALS['TL_LANG']['MSC']['by']; ?> <?= $review['nickname']; ?></span> | <time datetime="<?= $review['created_datetime']; ?>" class="regiondo-reviews__date"><?= $review['created_at']; ?></time></p>
 
-                <h4 class="regiondo-reviews__title"><?= $review['title'] ?></h4>
+                    <h4 class="regiondo-reviews__title"><?= $review['title']; ?></h4>
 
-                <p class="regiondo-reviews__text"><?= $review['detail'] ?></p>
+                    <p class="regiondo-reviews__text"><?= $review['detail']; ?></p>
 
-                <?php if ($review['vote_details']): ?>
-                    <ul class="regiondo-reviews__details">
-                        <?php foreach ($review['vote_details'] as $detail): ?>
-                            <li class="regiondo-reviews__detail"><?= $detail['rating_code'] ?>: <?= $detail['percent'] ?>%</li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p class="regiondo-reviews__empty"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.reviews.noReviews'] ?></p>
-    <?php endif; ?>
-</div>
+                    <?php if ($review['vote_details']): ?>
+                        <ul class="regiondo-reviews__details">
+                            <?php foreach ($review['vote_details'] as $detail): ?>
+                                <li class="regiondo-reviews__detail"><?= $detail['rating_code']; ?>: <?= $detail['percent']; ?>%</li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="regiondo-reviews__empty"><?= $GLOBALS['TL_LANG']['MSC']['regiondo.reviews.noReviews']; ?></p>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($this->showAggregatedReviews): ?>
+    <div class="regiondo-aggregated-reviews">
+        <span class="percent"><?= \round($this->aggregatedReviews['percent'], 2); ?>%</span>
+        <span class="count">(<?= $this->aggregatedReviews['count']; ?>)</span>
+    </div>
+<?php endif; ?>
 
 <?php $this->endblock(); ?>

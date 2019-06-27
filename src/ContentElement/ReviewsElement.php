@@ -3,8 +3,9 @@
 /*
  * Regiondo Bundle for Contao Open Source CMS.
  *
- * @copyright  Copyright (c) 2018, derhaeuptling
+ * @copyright  Copyright (c) 2019, derhaeuptling
  * @author     Codefog <https://codefog.pl>
+ * @author     Moritz V. <https://github.com/m-vo>
  * @license    MIT
  */
 
@@ -17,6 +18,9 @@ use Patchwork\Utf8;
 
 class ReviewsElement extends ContentElement
 {
+    public const SHOW_REVIEWS = 1 << 0;
+    public const SHOW_AGGREGATED_REVIEWS = 1 << 1;
+
     /**
      * Template.
      *
@@ -56,14 +60,25 @@ class ReviewsElement extends ContentElement
      */
     protected function compile(): void
     {
-        $reviews = $this->reviews;
+        $displayMode = $this->regiondo_reviewsDisplayMode;
+        $showReviews = $displayMode & self::SHOW_REVIEWS;
+        $showAggregatedReviews = $displayMode & self::SHOW_AGGREGATED_REVIEWS;
 
-        // Limit the number of reviews
-        if ($this->regiondo_reviewsLimit > 0) {
-            $reviews = \array_slice($reviews, 0, $this->regiondo_reviewsLimit);
+        if ($showAggregatedReviews) {
+            $this->Template->aggregatedReviews = $this->aggregateReviews($this->reviews);
         }
+        $this->Template->showAggregatedReviews = $showAggregatedReviews;
 
-        $this->Template->reviews = $this->generateReviews($reviews);
+        if ($showReviews) {
+            // Limit the number of reviews
+            $reviews = $this->reviews;
+            if ($this->regiondo_reviewsLimit > 0) {
+                $reviews = \array_slice($reviews, 0, $this->regiondo_reviewsLimit);
+            }
+
+            $this->Template->reviews = $this->generateReviews($reviews);
+        }
+        $this->Template->showReviews = $showReviews;
     }
 
     /**
@@ -92,5 +107,57 @@ class ReviewsElement extends ContentElement
         }
 
         return $reviews;
+    }
+
+    /**
+     * Aggregate reviews.
+     *
+     * @param array $items
+     *
+     * @return array
+     */
+    protected function aggregateReviews(array $items): array
+    {
+        $ratings = \array_filter(
+            \array_map(function ($item) {
+                if (!$item['vote_details']) {
+                    return null;
+                }
+
+                // Average vote details
+                return $this->calculateAverage(
+                    \array_map(static function ($item) {
+                        return $item['percent'];
+                    }, $item['vote_details'])
+                );
+            }, $items)
+        );
+
+        // Average votes
+        return [
+            'count' => \count($ratings),
+            'percent' => $this->calculateAverage($ratings),
+        ];
+    }
+
+    /**
+     * Calculate average - used to aggregate review details and reviews.
+     *
+     * @param array $values
+     *
+     * @return float
+     */
+    protected function calculateAverage(array $values): float
+    {
+        $sum = \array_reduce($values,
+            static function ($sum, $item) {
+                $sum += $item;
+
+                return $sum;
+            }
+        );
+
+        // Simple arithmetic mean
+        return $sum / \count($values);
     }
 }
