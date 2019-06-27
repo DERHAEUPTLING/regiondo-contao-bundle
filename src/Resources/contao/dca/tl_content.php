@@ -3,8 +3,9 @@
 /*
  * Regiondo Bundle for Contao Open Source CMS.
  *
- * @copyright  Copyright (c) 2018, derhaeuptling
+ * @copyright  Copyright (c) 2019, derhaeuptling
  * @author     Codefog <https://codefog.pl>
+ * @author     Moritz V. <https://github.com/m-vo>
  * @license    MIT
  */
 
@@ -18,9 +19,11 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [ContentListen
 /*
  * Add palettes
  */
+$GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'regiondo_filterProducts';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_event_booking_iframe'] = '{type_legend},type;{include_legend},regiondo_calendar,regiondo_iframeWidth;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_reviews'] = '{type_legend},type;{include_legend},regiondo_products,regiondo_reviewsLimit,regiondo_syncReviews;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_reviews'] = '{type_legend},type;{include_legend},regiondo_filterProducts,regiondo_reviewsLimit,regiondo_syncReviews;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_voucher'] = '{type_legend},type;{include_legend},regiondo_voucher,regiondo_iframeWidth;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['regiondo_filterProducts'] = 'regiondo_products';
 
 /*
  * Add fields
@@ -65,7 +68,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_reviewsLimit'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['regiondo_reviewsLimit'],
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['mandatory' => true, 'rgxp' => 'natural', 'tl_class' => 'w50'],
+    'eval' => ['mandatory' => true, 'rgxp' => 'natural', 'tl_class' => 'w50 clr'],
     'sql' => ['type' => 'smallint', 'unsigned' => true, 'default' => 0],
 ];
 
@@ -84,4 +87,12 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_syncReviews'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_reviews'] = [
     'sql' => ['type' => 'blob'],
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_filterProducts'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_content']['regiondo_filterProducts'],
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'eval' => ['submitOnChange' => true],
+    'sql' => ['type' => 'string', 'default' => '1', 'length' => 1, 'options' => ['fixed' => true]],
 ];

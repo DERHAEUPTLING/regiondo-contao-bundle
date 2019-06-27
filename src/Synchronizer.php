@@ -132,10 +132,18 @@ class Synchronizer
             throw new SynchronizerException(\sprintf('Content element ID %s does not exist', $contentElementId));
         }
 
-        $productIds = $this->getProductIds($contentElement['regiondo_products']);
+        if($contentElement['regiondo_filterProducts']) {
+            $productIds = $this->getProductIds($contentElement['regiondo_products'], false);
 
-        if (0 === \count($productIds)) {
-            throw new SynchronizerException(\sprintf('Content element ID %s has no Regiondo products', $contentElementId));
+            if (0 === \count($productIds)) {
+                throw new SynchronizerException(\sprintf('Content element ID %s has no Regiondo products', $contentElementId));
+            }
+        } else {
+            $productIds = $this->getProductIds(null, false);
+
+            if(0 === \count($productIds)) {
+                return [];
+            }
         }
 
         $reviews = [];
@@ -570,20 +578,32 @@ class Synchronizer
     /**
      * Get the product IDs.
      *
-     * @param string|array $recordIds
+     * @param string|array|null $recordIds Record ids to filter for.
+     * @param bool $includeObsolete Whether to include products marked as 'obsolete'.
      *
      * @return array
      */
-    private function getProductIds($recordIds): array
+    private function getProductIds($recordIds = null, $includeObsolete = true): array
     {
-        $recordIds = StringUtil::deserialize($recordIds, true);
+        $filterConditions = [];
 
-        if (0 === \count($recordIds)) {
-            return [];
+        if(null !== $recordIds) {
+            $recordIds = StringUtil::deserialize($recordIds, true);
+
+            if (0 === \count($recordIds)) {
+                return [];
+            }
+
+            $filterConditions[] = 'id IN ('.\implode(',', $recordIds).')';
+        }
+
+        if(!$includeObsolete) {
+            $filterConditions[] = 'obsolete = 0';
         }
 
         $productIds = [];
-        $records = $this->db->fetchAll('SELECT product FROM tl_regiondo_product WHERE id IN ('.\implode(',', $recordIds).')');
+        $filterCondition = \count($filterConditions) > 0 ? ' WHERE ' . implode(' AND ', $filterConditions) : '';
+        $records = $this->db->fetchAll('SELECT product FROM tl_regiondo_product' . $filterCondition);
 
         foreach ($records as $record) {
             $productIds[] = (int) $record['product'];
