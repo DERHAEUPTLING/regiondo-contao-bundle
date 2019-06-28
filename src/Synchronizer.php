@@ -155,7 +155,7 @@ class Synchronizer
                 continue;
             }
 
-            $product = $client->getProduct($productId);
+            $product = $this->db->fetchAssoc('SELECT * FROM tl_regiondo_product WHERE product=?', [$productId]);
 
             foreach ($items as $item) {
                 $item['product'] = $product;
