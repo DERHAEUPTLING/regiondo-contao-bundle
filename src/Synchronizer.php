@@ -3,8 +3,9 @@
 /*
  * Regiondo Bundle for Contao Open Source CMS.
  *
- * @copyright  Copyright (c) 2018, derhaeuptling
+ * @copyright  Copyright (c) 2019, derhaeuptling
  * @author     Codefog <https://codefog.pl>
+ * @author     Moritz V. <https://github.com/m-vo>
  * @license    MIT
  */
 
@@ -141,7 +142,7 @@ class Synchronizer
         } else {
             $productIds = $this->getProductIds();
 
-            if(0 === \count($productIds)) {
+            if (0 === \count($productIds)) {
                 return [];
             }
         }
@@ -578,8 +579,8 @@ class Synchronizer
     /**
      * Get the product IDs.
      *
-     * @param string|array|null $recordIds Record ids to filter for.
-     * @param bool $includeObsolete Whether to include products marked as 'obsolete'.
+     * @param string|array|null $recordIds       record ids to filter for
+     * @param bool              $includeObsolete whether to include products marked as 'obsolete'
      *
      * @return array
      */
@@ -587,7 +588,7 @@ class Synchronizer
     {
         $filterConditions = [];
 
-        if(null !== $recordIds) {
+        if (null !== $recordIds) {
             $recordIds = StringUtil::deserialize($recordIds, true);
 
             if (0 === \count($recordIds)) {
@@ -597,13 +598,13 @@ class Synchronizer
             $filterConditions[] = 'id IN ('.\implode(',', $recordIds).')';
         }
 
-        if(!$includeObsolete) {
+        if (!$includeObsolete) {
             $filterConditions[] = 'obsolete = 0';
         }
 
         $productIds = [];
-        $filterCondition = \count($filterConditions) > 0 ? ' WHERE ' . implode(' AND ', $filterConditions) : '';
-        $records = $this->db->fetchAll('SELECT product FROM tl_regiondo_product' . $filterCondition);
+        $filterCondition = \count($filterConditions) > 0 ? ' WHERE '.\implode(' AND ', $filterConditions) : '';
+        $records = $this->db->fetchAll('SELECT product FROM tl_regiondo_product'.$filterCondition);
 
         foreach ($records as $record) {
             $productIds[] = (int) $record['product'];
