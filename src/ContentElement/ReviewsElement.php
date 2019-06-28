@@ -68,6 +68,7 @@ class ReviewsElement extends ContentElement
             $this->Template->aggregatedReviews = $this->aggregateReviews($this->reviews);
         }
         $this->Template->showAggregatedReviews = $showAggregatedReviews;
+        $this->Template->ref = $this->regiondo_ref;
 
         if ($showReviews) {
             // Limit the number of reviews

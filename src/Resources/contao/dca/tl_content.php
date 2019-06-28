@@ -22,7 +22,7 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [ContentListen
  */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'regiondo_filterProducts';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_event_booking_iframe'] = '{type_legend},type;{include_legend},regiondo_calendar,regiondo_iframeWidth;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_reviews'] = '{type_legend},type;{include_legend},regiondo_filterProducts,regiondo_reviewsLimit,regiondo_syncReviews;regiondo_reviewsDisplayMode;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_reviews'] = '{type_legend},type;{include_legend},regiondo_filterProducts,regiondo_reviewsLimit,regiondo_syncReviews;regiondo_ref;regiondo_reviewsDisplayMode;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['regiondo_voucher'] = '{type_legend},type;{include_legend},regiondo_voucher,regiondo_iframeWidth;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['regiondo_filterProducts'] = 'regiondo_products';
 
@@ -110,4 +110,12 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_reviewsDisplayMode'] = [
     ],
     'eval' => ['tl_class' => 'w50'],
     'sql' => ['type' => 'smallint', 'unsigned' => true, 'default' => ReviewsElement::SHOW_REVIEWS],
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['regiondo_ref'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_content']['regiondo_ref'],
+    'exclude' => true,
+    'inputType' => 'text',
+    'eval' => ['rgxp' => 'url', 'decodeEntities' => true, 'dcaPicker' => true, 'addWizardClass' => false, 'tl_class' => 'w50'],
+    'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
 ];

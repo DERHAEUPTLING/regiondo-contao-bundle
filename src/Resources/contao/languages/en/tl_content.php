@@ -24,3 +24,4 @@ $GLOBALS['TL_LANG']['tl_content']['regiondo_reviewsDisplayMode_options'] = [
     ReviewsElement::SHOW_AGGREGATED_REVIEWS => 'Show aggregated reviews',
     ReviewsElement::SHOW_REVIEWS | ReviewsElement::SHOW_AGGREGATED_REVIEWS => 'Show both reviews and aggregated reviews',
 ];
+$GLOBALS['TL_LANG']['tl_content']['regiondo_ref'] = ['Redirect link', 'Examples: {{link_url::pagealias}} to alias, ID or other insert tag, http://example.com'];

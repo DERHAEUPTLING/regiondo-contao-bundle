@@ -30,8 +30,10 @@
 
 <?php if ($this->showAggregatedReviews): ?>
     <div class="regiondo-aggregated-reviews">
+        <?php if($this->ref): ?><a href="<?= $this->ref; ?>"><?php endif; ?>
         <span class="percent"><?= \round($this->aggregatedReviews['percent'], 2); ?>%</span>
         <span class="count">(<?= $this->aggregatedReviews['count']; ?>)</span>
+        <?php if($this->ref): ?></a><?php endif; ?>
     </div>
 <?php endif; ?>
 
