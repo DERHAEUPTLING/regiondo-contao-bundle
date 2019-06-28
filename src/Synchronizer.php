@@ -132,14 +132,14 @@ class Synchronizer
             throw new SynchronizerException(\sprintf('Content element ID %s does not exist', $contentElementId));
         }
 
-        if($contentElement['regiondo_filterProducts']) {
-            $productIds = $this->getProductIds($contentElement['regiondo_products'], false);
+        if ($contentElement['regiondo_filterProducts']) {
+            $productIds = $this->getProductIds($contentElement['regiondo_products']);
 
             if (0 === \count($productIds)) {
                 throw new SynchronizerException(\sprintf('Content element ID %s has no Regiondo products', $contentElementId));
             }
         } else {
-            $productIds = $this->getProductIds(null, false);
+            $productIds = $this->getProductIds();
 
             if(0 === \count($productIds)) {
                 return [];
