@@ -155,6 +155,7 @@ class EventBookingElement extends ContentElement
                 '@type' => 'AggregateRating',
                 'ratingCount' => $originalData['reviews_count'],
                 'ratingValue' => $originalData['rating_summary'],
+                'bestRating' => 100,
             ];
         }
 
