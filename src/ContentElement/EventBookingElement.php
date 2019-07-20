@@ -3,8 +3,9 @@
 /*
  * Regiondo Bundle for Contao Open Source CMS.
  *
- * @copyright  Copyright (c) 2018, derhaeuptling
+ * @copyright  Copyright (c) 2019, derhaeuptling
  * @author     Codefog <https://codefog.pl>
+ * @author     Moritz V. <https://github.com/m-vo>
  * @license    MIT
  */
 
@@ -147,6 +148,15 @@ class EventBookingElement extends ContentElement
                 'availability' => ($option['qty_left'] > 0) ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock',
             ],
         ];
+
+        // Add aggregate ratings if present
+        if ($originalData['reviews_count'] && $originalData['rating_summary']) {
+            $data['aggregateRating'] = [
+                '@type' => 'AggregateRating',
+                'ratingCount' => $originalData['reviews_count'],
+                'ratingValue' => $originalData['rating_summary'],
+            ];
+        }
 
         // Add the image
         if ($model->addImage && null !== ($image = FilesModel::findByPk($model->singleSRC)) && \is_file(TL_ROOT.'/'.$image->path)) {
