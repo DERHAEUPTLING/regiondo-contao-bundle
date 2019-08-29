@@ -140,13 +140,19 @@ class EventBookingElement extends ContentElement
                 'name' => $originalData['location_name'],
                 'address' => $originalData['location_address'],
             ],
+            'performer' => [
+                '@type' => 'Organization',
+                'name'  => $originalData['provider']
+            ],
             'offers' => [
                 '@type' => 'Offer',
                 'price' => \number_format($option['regiondo_price'], 2, '.', ''),
                 'priceCurrency' => 'EUR',
                 'url' => Environment::get('uri'),
                 'availability' => ($option['qty_left'] > 0) ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock',
+                'validFrom' => $originalData['created_at'],
             ],
+            
         ];
 
         // Add aggregate ratings if present
