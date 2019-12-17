@@ -64,9 +64,11 @@ class ReviewsElement extends ContentElement
         $showReviews = $displayMode & self::SHOW_REVIEWS;
         $showAggregatedReviews = $displayMode & self::SHOW_AGGREGATED_REVIEWS;
 
-        if ($showAggregatedReviews) {
-            $this->Template->aggregatedReviews = $this->aggregateReviews($this->reviews);
-        }
+        // if ($showAggregatedReviews) {
+        //     $this->Template->aggregatedReviews = $this->aggregateReviews($this->reviews);
+        // }
+        $this->Template->aggregatedReviews = $this->aggregateReviews($this->reviews);
+        
         $this->Template->showAggregatedReviews = $showAggregatedReviews;
         $this->Template->ref = $this->regiondo_ref;
 
